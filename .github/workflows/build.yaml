@@ -37,10 +37,8 @@ jobs:
           severity: 'HIGH,CRITICAL'
           
       - name: Post Result
-        env:
-          SUCESS: ${{ steps.scan.outputs.output }} 
         run: | 
-          curl -X POST --data-urlencode "payload={\"channel\": \"#workflows-notifications\", \"username\": \"webhookbot\", \"text\": \"${SUCESS}\", \"icon_emoji\": \":sunny:\"}" $SLACK_WEBHOOK
+          curl -X POST --data-urlencode "payload={\"channel\": \"#workflows-notifications\", \"username\": \"webhookbot\", \"text\": \"${{ steps.scan.outputs.output }}", \"icon_emoji\": \":sunny:\"}" $SLACK_WEBHOOK
 
         
 #           - curl -X POST --data-urlencode 'payload={"text":"Test slack integration via yaml"}' ${{SLACK_WEBHOOK}}
