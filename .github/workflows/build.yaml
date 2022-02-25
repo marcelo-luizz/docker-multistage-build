@@ -26,6 +26,7 @@ jobs:
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
+        id: scan
         with:
           image-ref: 'marceloluiz1/nodeapp:1.0'
           output: 'trivy-results.sarif'
@@ -37,7 +38,8 @@ jobs:
           
       - name: Post Result
         run: |
-          curl -X POST --data-urlencode "payload={\"channel\": \"#workflows-notifications\", \"username\": \"webhookbot\", \"text\": \"trivy-results.sarif\", \"icon_emoji\": \":sunny:\"}" $SLACK_WEBHOOK
+          export SLACK_MESSAGE=${{ steps.scan.outputs.stdout }} 
+          curl -X POST --data-urlencode "payload={\"channel\": \"#workflows-notifications\", \"username\": \"webhookbot\", \"text\": \"${SLACK_MESSAGE}\", \"icon_emoji\": \":sunny:\"}" $SLACK_WEBHOOK
 
         
 #           - curl -X POST --data-urlencode 'payload={"text":"Test slack integration via yaml"}' ${{SLACK_WEBHOOK}}
