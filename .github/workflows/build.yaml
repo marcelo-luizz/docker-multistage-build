@@ -38,7 +38,7 @@ jobs:
           
       - name: Post Result
         env:
-          SLACK_MESSAGE: ${{ steps.tests.outputs.stdout }} 
+          SLACK_MESSAGE: ${{ steps.scan.outputs.stdout }} 
         run: | 
           curl -X POST --data-urlencode "payload={\"channel\": \"#workflows-notifications\", \"username\": \"webhookbot\", \"text\": \"${SLACK_MESSAGE}\", \"icon_emoji\": \":sunny:\"}" $SLACK_WEBHOOK
 
