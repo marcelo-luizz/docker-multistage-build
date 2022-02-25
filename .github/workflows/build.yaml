@@ -28,17 +28,13 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: 'marceloluiz1/nodeapp:1.0'
+          output: 'trivy-results.sarif'
           format: 'table'
           exit-code: '0'
           ignore-unfixed: true
           vuln-type: 'os,library'
-          severity: 'CRITICAL,HIGH'
+          severity: 'LOW'
           
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v1
-        with:
-          sarif_file: 'trivy-results.sarif'
-
       - name: Post Result
         run: |
           curl -X POST --data-urlencode "payload={\"channel\": \"#workflows-notifications\", \"username\": \"webhookbot\", \"text\": \"trivy-results.sarif\", \"icon_emoji\": \":sunny:\"}" $SLACK_WEBHOOK
