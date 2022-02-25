@@ -2,6 +2,9 @@ name: Clair Scan
 on:
   push:
   workflow_dispatch:
+  
+env: 
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
 jobs:
   build:
@@ -26,7 +29,7 @@ jobs:
         with:
           image-ref: 'marceloluiz1/nodeapp:1.0'
           format: 'table'
-          exit-code: '1'
+          exit-code: '0'
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
@@ -35,6 +38,13 @@ jobs:
         uses: github/codeql-action/upload-sarif@v1
         with:
           sarif_file: 'trivy-results.sarif'
+
+      - name: Post Result
+        run: |
+          curl -X POST --data-urlencode "payload={\"channel\": \"#workflows-notifications\", \"username\": \"webhookbot\", \"text\": \"trivy-results.sarif\", \"icon_emoji\": \":sunny:\"}" $SLACK_WEBHOOK
+
+        
+#           - curl -X POST --data-urlencode 'payload={"text":"Test slack integration via yaml"}' ${{SLACK_WEBHOOK}}
 
         # - name: Scan image
       #   run: |
