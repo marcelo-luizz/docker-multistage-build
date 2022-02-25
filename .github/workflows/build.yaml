@@ -40,8 +40,7 @@ jobs:
         env: 
           SLACK_WEBHOOK: ${{secrets.SLACK_WEBHOOK}}
         run: | 
-          curl -X POST --data-urlencode "payload={\"channel\": \"#workflows-notifications\", \"username\": \"webhookbot\", \"text\": \"$TESTE", \"icon_emoji\": \":sunny:\"}" $SLACK_WEBHOOK
-
+          curl -X POST --data-urlencode "payload={\"channel\": \"#workflows-notifications\", \"username\": \"webhookbot\", \"text\": \"teste\", \"icon_emoji\": \":sunny:\"}" $SLACK_WEBHOOK
         
 #           - curl -X POST --data-urlencode 'payload={"text":"Test slack integration via yaml"}' ${{SLACK_WEBHOOK}}
 
