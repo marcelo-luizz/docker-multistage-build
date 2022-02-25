@@ -33,7 +33,7 @@ jobs:
           exit-code: '1'
           ignore-unfixed: true
           vuln-type: 'os,library'
-          severity: 'LOW'
+          severity: 'HIGH,CRITICAL'
           
       - name: Post Result
         run: |
