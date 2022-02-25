@@ -38,9 +38,9 @@ jobs:
           
       - name: Post Result
         env:
-          SLACK_MESSAGE: ${{ steps.scan.outputs.stdout }} 
+          SLACK_MESSAGE: ${{ steps.scan.outputs.output }} 
         run: | 
-          curl -X POST --data-urlencode "payload={\"channel\": \"#workflows-notifications\", \"username\": \"webhookbot\", \"text\": \"${SLACK_MESSAGE}\", \"icon_emoji\": \":sunny:\"}" $SLACK_WEBHOOK
+          curl -X POST --data-urlencode "payload={\"channel\": \"#workflows-notifications\", \"username\": \"webhookbot\", \"text\": \"${SUCESS}\", \"icon_emoji\": \":sunny:\"}" $SLACK_WEBHOOK
 
         
 #           - curl -X POST --data-urlencode 'payload={"text":"Test slack integration via yaml"}' ${{SLACK_WEBHOOK}}
